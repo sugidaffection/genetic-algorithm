@@ -98,18 +98,6 @@ impl Population {
 		let mut found = false;
 
 		while !found {
-			if let Some(dna) = self.best.first(){
-				let mut c = 0;
-				for (x,y) in dna.genes.iter().zip(dna.target.chars()){
-					if *x == y as u8 {
-						c+=1;
-					}
-				}
-
-				if c == dna.target.len(){
-					found = true
-				}
-			}
 
 			for person in &mut self.best {
 				person.calculate_fitness();
@@ -131,6 +119,19 @@ impl Population {
 			println!("{:?}", self.best.first().unwrap().genes.iter().map(|x| *x as char).collect::<String>());
 			println!();
 			self.generation+=1;
+
+			if let Some(dna) = self.best.first(){
+				let mut c = 0;
+				for (x,y) in dna.genes.iter().zip(dna.target.chars()){
+					if *x == y as u8 {
+						c+=1;
+					}
+				}
+
+				if c == dna.target.len(){
+					found = true
+				}
+			}
 		}
 	}
 }
